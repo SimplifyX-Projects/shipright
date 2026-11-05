@@ -425,3 +425,8 @@ user-facing source of truth and was kept in sync (PRs #8, #9).
   4b runs the built-in `/security-review` when the diff touches auth,
   secrets, dependencies, CI, infra, or trust-boundary parsing; every
   pipeline PR ends with `Shipped with ShipRight`.
+- **Lean pass (PR #13, plugin 1.3.0).** `ship` step 4c runs
+  `/ponytail:ponytail-review` whenever the diff changes code, keeping its
+  lean findings (delete, reuse, stdlib, yagni) for the fix step and its
+  `Lean: -N lines` figure for the handback; ponytail mode steers the
+  build, this pass checks the result.
