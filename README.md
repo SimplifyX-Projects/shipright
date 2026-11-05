@@ -34,18 +34,18 @@ Rules that never bend: Claude never merges the PR; the base branch is never push
 Prerequisites:
 
 - Claude Code (CLI, desktop app, or IDE extension)
-- Git access to `github.com/kureelvinay/shipright` that works without prompting (SSH key or a credential helper)
+- Git access to `github.com/SimplifyX-Projects/shipright` that works without prompting (SSH key or a credential helper)
 - Node.js 18+ (ponytail hooks, understand-anything dashboard)
 - Python 3 with `uv` or `pip` (graphify installs the `graphifyy` package on first use)
 
 ```bash
-claude plugin marketplace add kureelvinay/shipright
+claude plugin marketplace add SimplifyX-Projects/shipright
 claude plugin install shipright@shipright --scope user
 ```
 
-Inside a Claude Code session (desktop app or IDE extension, where the `claude` command may not be on your PATH) the same two steps are `/plugin marketplace add kureelvinay/shipright` and `/plugin install shipright@shipright`.
+Inside a Claude Code session (desktop app or IDE extension, where the `claude` command may not be on your PATH) the same two steps are `/plugin marketplace add SimplifyX-Projects/shipright` and `/plugin install shipright@shipright`.
 
-If `marketplace add` fails with an SSH or host-key error, use the HTTPS form instead: `claude plugin marketplace add https://github.com/kureelvinay/shipright.git`.
+If `marketplace add` fails with an SSH or host-key error, use the HTTPS form instead: `claude plugin marketplace add https://github.com/SimplifyX-Projects/shipright.git`.
 
 Then, once, inside any Claude Code session: `/plugin` → **Marketplaces** → **shipright** → **Enable auto-update**. Without this step, future updates never reach your machine.
 
@@ -57,15 +57,15 @@ Verify:
 Check the machine any time with `/shipright:doctor` inside a session. If the install itself failed, run the same checks without the plugin (needs `gh auth login` once):
 
 ```bash
-gh api -H "Accept: application/vnd.github.raw" repos/kureelvinay/shipright/contents/plugins/shipright/skills/doctor/doctor.sh | bash
+gh api -H "Accept: application/vnd.github.raw" repos/SimplifyX-Projects/shipright/contents/plugins/shipright/skills/doctor/doctor.sh | bash
 ```
 
 ### Troubleshooting
 
 - **Auto-update silently off** after re-adding the marketplace: `claude plugin marketplace add` rewrites the entry and drops `autoUpdate`. Re-enable it (`/plugin` → **Marketplaces** → **shipright** → **Enable auto-update**) and confirm with `/shipright:doctor`.
 
-- **"Failed to add marketplace"** in the desktop app's plugin pane, with `its source doesn't match its extraKnownMarketplaces entry` in the app log (`~/Library/Logs/Claude/main.log` on macOS): ShipRight is already registered on this machine from a different source form. The CLI shorthand `kureelvinay/shipright` records a `github` source; the pane records the HTTPS URL as a `git` source, and the two are not interchangeable once one exists. Removing the plugin does not remove that entry. Fix: run `claude plugin marketplace list`; if `shipright` is listed, skip the add and run `claude plugin install shipright@shipright --scope user`. To add from the pane anyway, first delete the `shipright` entry under `extraKnownMarketplaces` in `~/.claude/settings.json`, then add again and re-enable auto-update.
-- **"Please make sure you have the correct access rights"** or **"unable to get password"**: git cannot authenticate to the private repo without prompting. Run `gh auth login` and then `gh auth setup-git`, or add an SSH key to your GitHub account, and confirm you have read access to `github.com/kureelvinay/shipright`.
+- **"Failed to add marketplace"** in the desktop app's plugin pane, with `its source doesn't match its extraKnownMarketplaces entry` in the app log (`~/Library/Logs/Claude/main.log` on macOS): ShipRight is already registered on this machine from a different source form. The CLI shorthand `SimplifyX-Projects/shipright` records a `github` source; the pane records the HTTPS URL as a `git` source, and the two are not interchangeable once one exists. Removing the plugin does not remove that entry. Fix: run `claude plugin marketplace list`; if `shipright` is listed, skip the add and run `claude plugin install shipright@shipright --scope user`. To add from the pane anyway, first delete the `shipright` entry under `extraKnownMarketplaces` in `~/.claude/settings.json`, then add again and re-enable auto-update.
+- **"Please make sure you have the correct access rights"** or **"unable to get password"**: git cannot authenticate to the private repo without prompting. Run `gh auth login` and then `gh auth setup-git`, or add an SSH key to your GitHub account, and confirm you have read access to `github.com/SimplifyX-Projects/shipright`.
 
 ## Daily cheat-sheet
 
@@ -124,7 +124,7 @@ The skills in this bundle are the process. When a step misleads you, sends you d
 
 ### claude.ai Team / Enterprise
 
-Organization settings → **Plugins & skills** → **Add** → **Sync from GitHub** → `kureelvinay/shipright`. Set all six plugins to **Installed by default** and turn on **Sync automatically**. Members signed in with claude.ai get ShipRight with no commands; Claude Code syncs once per launch.
+Organization settings → **Plugins & skills** → **Add** → **Sync from GitHub** → `SimplifyX-Projects/shipright`. Set all six plugins to **Installed by default** and turn on **Sync automatically**. Members signed in with claude.ai get ShipRight with no commands; Claude Code syncs once per launch.
 
 ### IT-managed machines (API key / Bedrock / Vertex)
 
@@ -138,7 +138,7 @@ Add to `managed-settings.json`:
 {
   "extraKnownMarketplaces": {
     "shipright": {
-      "source": { "source": "github", "repo": "kureelvinay/shipright" },
+      "source": { "source": "github", "repo": "SimplifyX-Projects/shipright" },
       "autoUpdate": true
     }
   },
@@ -147,7 +147,7 @@ Add to `managed-settings.json`:
 }
 ```
 
-Plugins install at the start of each user's next session. `autoUpdate` is locked on by the managed value, and `FORCE_AUTOUPDATE_PLUGINS` keeps plugin auto-update running on fleets where Claude Code's own updater is disabled (`DISABLE_AUTOUPDATER`, `DISABLE_UPDATES`, or `autoUpdates: false`). If your machines reach GitHub over HTTPS rather than SSH, use `"source": { "source": "git", "url": "https://github.com/kureelvinay/shipright.git" }` as the marketplace source instead.
+Plugins install at the start of each user's next session. `autoUpdate` is locked on by the managed value, and `FORCE_AUTOUPDATE_PLUGINS` keeps plugin auto-update running on fleets where Claude Code's own updater is disabled (`DISABLE_AUTOUPDATER`, `DISABLE_UPDATES`, or `autoUpdates: false`). If your machines reach GitHub over HTTPS rather than SSH, use `"source": { "source": "git", "url": "https://github.com/SimplifyX-Projects/shipright.git" }` as the marketplace source instead.
 
 ## For maintainers
 
@@ -165,7 +165,7 @@ claude plugin validate plugins/shipright --strict
 python3 -m unittest discover -s tests -v
 bash tests/test_doctor.sh
 export CLAUDE_CONFIG_DIR="$(mktemp -d)"
-claude plugin marketplace add kureelvinay/shipright
+claude plugin marketplace add SimplifyX-Projects/shipright
 claude plugin install shipright@shipright --scope user
 claude plugin list   # expect 6 plugins
 unset CLAUDE_CONFIG_DIR

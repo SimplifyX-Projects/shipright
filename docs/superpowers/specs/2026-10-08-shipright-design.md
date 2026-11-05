@@ -425,3 +425,7 @@ user-facing source of truth and was kept in sync (PRs #8, #9).
   4b runs the built-in `/security-review` when the diff touches auth,
   secrets, dependencies, CI, infra, or trust-boundary parsing; every
   pipeline PR ends with `Shipped with ShipRight`.
+- **Repository move (PR #14, plugin 1.2.1).** The repo is now
+  `SimplifyX-Projects/shipright`. README install commands and managed
+  settings, `doctor.sh`'s default `REPO`, and the welcome hook's process
+  guide URL name the new owner; GitHub redirects the old path.
