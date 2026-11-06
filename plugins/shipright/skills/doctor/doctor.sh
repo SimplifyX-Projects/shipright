@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # ShipRight doctor: checks this machine can install and run ShipRight.
 # Prints PASS/FAIL per check with a fix for each failure. Always exits 0.
-#   bash doctor.sh                      # default repo kureelvinay/shipright
+#   bash doctor.sh                      # default repo SimplifyX-Projects/shipright
 #   SHIPRIGHT_REPO=org/repo bash doctor.sh
 set -u
-REPO="${SHIPRIGHT_REPO:-kureelvinay/shipright}"
+REPO="${SHIPRIGHT_REPO:-SimplifyX-Projects/shipright}"
 CONFIG="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
 pass=0; fail=0
 ok()  { pass=$((pass + 1)); printf 'PASS  %s\n' "$1"; }

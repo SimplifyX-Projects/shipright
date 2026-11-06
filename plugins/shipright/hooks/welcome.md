@@ -9,4 +9,4 @@ Use the standard flow, not ad-hoc edits:
 - UI changes → impeccable runs inside /ship; on demand: /impeccable:impeccable audit
 
 Ponytail (lazy senior dev) is on: smallest working diff, no speculative abstractions.
-Process guide: https://github.com/kureelvinay/shipright#readme
+Process guide: https://github.com/SimplifyX-Projects/shipright#readme
