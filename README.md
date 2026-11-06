@@ -22,10 +22,11 @@ Every feature or bug fix goes through `/shipright:ship`:
 3. **Branch + PR.** Push and open a PR against the base branch, its description ending with `Shipped with ShipRight`. Never push to base directly.
 4. **Code review.** `/code-review` at high effort.
 5. **Security review.** `/security-review` runs when the diff touches auth, secrets, dependencies, CI, infrastructure, or input parsing at a trust boundary; otherwise it is skipped with a one-line note.
-6. **UI review.** `impeccable` runs if UI files changed.
-7. **Apply fixes.** Review findings land on the branch.
-8. **Verify.** Full test suite, build, and live use for UI changes. A partial pass is not a pass.
-9. **Hand back.** PR link, test status, what each review (code, security, UI) flagged and how it was resolved.
+6. **Lean review.** `/ponytail:ponytail-review` runs when the diff changes code: dead code, helpers the repo already has, stdlib or native features that do the job, abstractions with one implementation. Skipped with a one-line note for docs-only diffs.
+7. **UI review.** `impeccable` runs if UI files changed.
+8. **Apply fixes.** Review findings land on the branch.
+9. **Verify.** Full test suite, build, and live use for UI changes. A partial pass is not a pass.
+10. **Hand back.** PR link, test status, what each review (code, security, lean, UI) flagged and how it was resolved.
 
 Rules that never bend: Claude never merges the PR; the base branch is never pushed to directly; nothing is reported as ready without this run's own test and build output.
 
@@ -79,6 +80,7 @@ gh api -H "Accept: application/vnd.github.raw" repos/kureelvinay/shipright/conte
 | Understand an unfamiliar codebase | `/shipright:graphify` or `/understand-anything:understand` |
 | Onboard someone to a repo | `/understand-anything:understand-onboard` |
 | Security-check a branch you are opening by hand | `/security-review` (also runs inside `/ship` when the diff touches auth, secrets, dependencies, CI, or infra) |
+| Check a branch you are opening by hand for over-engineering | `/ponytail:ponytail-review` (also runs inside `/ship` when the diff changes code) |
 | Audit or polish UI | `/impeccable:impeccable audit` (also runs inside `/ship` when UI changed) |
 | Change how aggressive the minimal-diff mode is | `/ponytail:ponytail lite`, `full` (default), or `ultra` |
 
