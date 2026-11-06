@@ -60,6 +60,7 @@ explicit re-ask before repeating it.
 | 3. Branch + PR | Sonnet |
 | 4. Code review | Opus |
 | 4b. Security review | Opus |
+| 4c. Lean review | Opus |
 | 5. UI review | Opus |
 | 6. Apply fixes | Sonnet |
 | 7. Verify | Opus |
@@ -163,10 +164,20 @@ which model is orchestrating.
    deserialization, data leakage), so treat every High and Medium finding
    as a fix for Step 6, not a judgment call. When none of those areas
    changed, skip cleanly and say so in one line in the handback.
+4c. **Lean review (model: Opus) — only if the diff changes code; skip
+   cleanly for docs-only diffs and say so in one line in the handback.**
+   Run `/ponytail:ponytail-review` against the PR branch. Its lean
+   findings — dead code, a helper the repo already has, stdlib or a
+   native feature that does the job, an abstraction with one
+   implementation, a new dependency for a few lines — are what Step 4
+   does not look for: keep every one of them for Step 6, drop anything
+   Step 4 or 4b already reported, and carry its `Lean: -N lines` figure
+   into the handback. Ponytail mode steers the build toward the smallest
+   diff; this pass is what checks it got there.
 5. **UI review (model: Opus) — only if the diff touches UI/frontend files.** Run the
    `impeccable` skill against the branch for a visual/UX pass. Skip
    cleanly (don't force it) when nothing UI-facing changed.
-6. **Apply fixes (model: Sonnet).** Apply findings from both reviews directly to the
+6. **Apply fixes (model: Sonnet).** Apply findings from all reviews directly to the
    branch and push.
 7. **Verify (model: Opus).** Run the full test suite — unit, and integration/UAT as
    its own explicit check if the project has one (a documented script,
@@ -253,7 +264,7 @@ which model is orchestrating.
    encountering a pre-existing failure, check that place before asking
    the user whether it's known.
 8. **Hand back (model: Sonnet).** Report the PR URL, a one-line summary, test/build
-   status, what each review flagged (code, security when it ran, UI) and
+   status, what each review flagged (code, security when it ran, lean, UI) and
    how it was resolved, and — for
    UI-facing changes — a screenshot or brief description of what you
    actually saw when using it live. If a packaged artifact was built or
@@ -275,6 +286,9 @@ which model is orchestrating.
 - Never skip the security pass when the diff touches auth, secrets,
   dependencies, CI, infra, or trust-boundary parsing — and never run it as
   a formality when none of those changed.
+- Never skip the lean pass when the diff changes code — ponytail mode
+  only steers the build; a branch that passes code review can still
+  carry speculative abstractions nobody checked for.
 - Never omit the `Shipped with ShipRight` footer from a PR this pipeline
   opens — it is how adoption is measured.
 - Never run a production build while a dev server is pointed at the
@@ -331,6 +345,7 @@ which model is orchestrating.
 | Branch + PR (confirm base, Summary+Test Plan, combined-branch testing if needed) | Sonnet | git / gh | No |
 | Code review (incl. test-coverage/fixture-gap check) | Opus | `/code-review` (effort: high) | No |
 | Security review | Opus | `/security-review` (if diff touches auth/secrets/deps/CI/infra/trust-boundary parsing) | No |
+| Lean review | Opus | `/ponytail:ponytail-review` (if the diff changes code; keep lean findings, drop what code/security review already reported) | No |
 | UI review | Opus | `impeccable` (if UI changed) | No |
 | Apply fixes | Sonnet | — | No |
 | Verify | Opus | unit + integration/UAT (separate results, pre-existing-failure check) + build (dev server stopped first) + live use for UI changes + clean-environment check + packaged-artifact/checksum verification if applicable | No |
