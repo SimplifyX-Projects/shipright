@@ -21,8 +21,8 @@
       "source": {
         "source": "url",
         "url": "https://github.com/obra/superpowers.git",
-        "ref": "v7.0.1",
-        "sha": "2ce8aa15d05bd57213e6f746f953aafb7ded7a8b"
+        "ref": "v7.0.2",
+        "sha": "22f0b463e7a5e579904dd6211a520321035526f7"
       }
     },
     {
@@ -32,8 +32,8 @@
         "source": "git-subdir",
         "url": "https://github.com/pbakaus/impeccable.git",
         "path": "plugin",
-        "ref": "skill-v4.8.0",
-        "sha": "414603bf14c7a344edb466bb1f85690c77ce8b7d"
+        "ref": "skill-v4.8.1",
+        "sha": "924bbd194d02e5e15a227e75b5901fb0d7a4ecad"
       }
     },
     {
@@ -42,7 +42,7 @@
       "source": {
         "source": "url",
         "url": "https://github.com/leonxlnx/taste-skill.git",
-        "sha": "12af471f627f866411b4bd785b19646d3672784c"
+        "sha": "f6b76575f949707b4e3c37cd86cb44b0b98643e8"
       }
     },
     {
@@ -61,7 +61,7 @@
       "source": {
         "source": "url",
         "url": "https://github.com/Egonex-AI/Understand-Anything.git",
-        "sha": "4e6d3299017a7432da15957874992837a315c5b4"
+        "sha": "a6ea4024767df85ce4f99140d4f12ecfc5a81eb6"
       }
     }
   ]
